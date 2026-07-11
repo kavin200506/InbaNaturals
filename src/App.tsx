@@ -13,6 +13,7 @@ import FAQPage from './pages/FAQPage';
 import BlogListingPage from './pages/BlogListingPage';
 import BlogPostDetailPage from './pages/BlogPostDetailPage';
 import { CartProvider } from './context/CartContext';
+import ScrollToTop from './components/ScrollToTop';
 
 // Placeholder policy pages
 function PolicyPage({ title }: { title: string }) {
@@ -37,6 +38,7 @@ export default function App() {
   return (
     <CartProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <div className="flex flex-col min-h-screen">
           <Navbar />
           <main className="flex-1">
