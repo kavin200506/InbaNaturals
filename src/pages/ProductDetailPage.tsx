@@ -7,6 +7,7 @@ import StarRating from '../components/StarRating';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { getWhatsAppProductLink } from '../config';
+import { Helmet } from 'react-helmet-async';
 
 type Tab = 'description' | 'howToUse' | 'ingredients';
 
@@ -112,6 +113,10 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>{product.name} - InbaNaturals</title>
+        <meta name="description" content={product.tagline} />
+      </Helmet>
 
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">

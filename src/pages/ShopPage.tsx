@@ -3,6 +3,7 @@ import { SlidersHorizontal, Search } from 'lucide-react';
 import LeafDivider from '../components/LeafDivider';
 import ProductCard from '../components/ProductCard';
 import { products } from '../data/products';
+import { Helmet } from 'react-helmet-async';
 
 type FilterCategory = 'all' | 'hair' | 'face';
 type SortOption = 'default' | 'price-asc' | 'price-desc' | 'name';
@@ -27,6 +28,10 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Shop All Products - InbaNaturals</title>
+        <meta name="description" content="Handcrafted botanical beauty for your hair and skin — free from harmful chemicals, full of plant love." />
+      </Helmet>
 
       {/* Page header */}
       <div className="bg-ivory-dark py-14 text-center border-b border-ivory-dark">

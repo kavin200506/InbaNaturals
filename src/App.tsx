@@ -14,25 +14,10 @@ import BlogListingPage from './pages/BlogListingPage';
 import BlogPostDetailPage from './pages/BlogPostDetailPage';
 import { CartProvider } from './context/CartContext';
 import ScrollToTop from './components/ScrollToTop';
-
-// Placeholder policy pages
-function PolicyPage({ title }: { title: string }) {
-  return (
-    <div className="min-h-screen max-w-3xl mx-auto px-4 py-20">
-      <h1 className="font-serif text-4xl text-charcoal mb-4">{title}</h1>
-      <div className="bg-white rounded-2xl p-8 border border-ivory-dark shadow-sm space-y-4">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i}>
-            <h3 className="font-serif text-lg text-charcoal mb-1">Section {i + 1}</h3>
-            <p className="text-charcoal-light text-sm leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+import ShippingPolicyPage from './pages/ShippingPolicyPage';
+import ReturnsPolicyPage from './pages/ReturnsPolicyPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsPage from './pages/TermsPage';
 
 export default function App() {
   return (
@@ -53,10 +38,10 @@ export default function App() {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/testimonials" element={<TestimonialsPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              <Route path="/shipping" element={<PolicyPage title="Shipping Policy" />} />
-              <Route path="/returns" element={<PolicyPage title="Returns & Refunds" />} />
-              <Route path="/privacy" element={<PolicyPage title="Privacy Policy" />} />
-              <Route path="/terms" element={<PolicyPage title="Terms of Service" />} />
+              <Route path="/shipping" element={<ShippingPolicyPage />} />
+              <Route path="/returns" element={<ReturnsPolicyPage />} />
+              <Route path="/privacy" element={<PrivacyPolicyPage />} />
+              <Route path="/terms" element={<TermsPage />} />
               <Route path="*" element={
                 <div className="min-h-screen flex items-center justify-center text-center px-4">
                   <div>

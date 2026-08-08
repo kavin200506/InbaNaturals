@@ -7,6 +7,7 @@ import StarRating from '../components/StarRating';
 import { products } from '../data/products';
 import { INSTAGRAM_URL } from '../config';
 import FAQAccordion from '../components/FAQAccordion';
+import { Helmet } from 'react-helmet-async';
 
 const testimonials = [
   {
@@ -41,6 +42,10 @@ export default function HomePage() {
 
   return (
     <div className="overflow-x-hidden">
+      <Helmet>
+        <title>Home - InbaNaturals</title>
+        <meta name="description" content="Discover our handcrafted botanical beauty rituals — made with the purest ingredients from nature, for skin and hair that truly thrives." />
+      </Helmet>
 
       {/* ─── HERO ─── */}
       <section
@@ -169,8 +174,8 @@ export default function HomePage() {
                   Hair Oil + Hair Pack: A complete deep conditioning package to strengthen roots and restore silky texture.
                 </p>
                 <div className="flex gap-2 mb-6">
-                  <img src="https://placehold.co/100x100/7A9471/FAF6EE?text=Oil" alt="Hair Oil" className="w-14 h-14 rounded-xl object-cover border border-ivory-dark" />
-                  <img src="https://placehold.co/100x100/A8C1A1/2E2A26?text=Pack" alt="Hair Pack" className="w-14 h-14 rounded-xl object-cover border border-ivory-dark" />
+                  <img src={products[0].image} alt="Hair Oil" className="w-14 h-14 rounded-xl object-cover border border-ivory-dark" />
+                  <img src={products[1].image} alt="Hair Pack" className="w-14 h-14 rounded-xl object-cover border border-ivory-dark" />
                 </div>
               </div>
               <div className="flex items-center justify-between pt-4 border-t border-ivory-dark">
@@ -198,8 +203,8 @@ export default function HomePage() {
                   Face Pack + Face Serum: Our Ayurvedic brightening clay mask paired with premium vitamin C hydration.
                 </p>
                 <div className="flex gap-2 mb-6">
-                  <img src="https://placehold.co/100x100/C97C5D/FAF6EE?text=Pack" alt="Face Pack" className="w-14 h-14 rounded-xl object-cover border border-ivory-dark" />
-                  <img src="https://placehold.co/100x100/5A7453/FAF6EE?text=Serum" alt="Face Serum" className="w-14 h-14 rounded-xl object-cover border border-ivory-dark" />
+                  <img src={products[2].image} alt="Face Pack" className="w-14 h-14 rounded-xl object-cover border border-ivory-dark" />
+                  <img src={products[3].image} alt="Face Serum" className="w-14 h-14 rounded-xl object-cover border border-ivory-dark" />
                 </div>
               </div>
               <div className="flex items-center justify-between pt-4 border-t border-ivory-dark">

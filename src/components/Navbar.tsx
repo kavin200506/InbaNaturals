@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { ShoppingCart, Menu, X, MessageCircle } from 'lucide-react';
+import { ShoppingCart, Menu, X, MessageCircle, Plus, Minus, Trash2 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { WHATSAPP_NUMBER } from '../config';
+import { WHATSAPP_NUMBER, getWhatsAppCartLink } from '../config';
 
 const navLinks = [
   { label: 'Home', to: '/' },
@@ -17,7 +17,8 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { cartCount } = useCart();
+  const [cartOpen, setCartOpen] = useState(false);
+  const { cart, cartCount, cartTotal, addToCart, removeFromCart } = useCart();
 
   return (
     <>
@@ -74,6 +75,7 @@ export default function Navbar() {
 
               {/* Cart icon */}
               <button
+                onClick={() => setCartOpen(true)}
                 className="relative flex items-center justify-center w-10 h-10 rounded-xl hover:bg-ivory-dark transition-colors cursor-pointer"
                 aria-label="Shopping cart"
               >
@@ -165,6 +167,125 @@ export default function Navbar() {
                 © {new Date().getFullYear()} InbaNaturals · Made with 🌿
               </p>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── Cart Slide-in Drawer ─── */}
+      {cartOpen && (
+        <div className="fixed inset-0 z-[9999] flex justify-end" role="dialog" aria-modal="true" aria-label="Shopping Cart">
+          {/* Dark backdrop — click anywhere to close */}
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setCartOpen(false)}
+          />
+
+          {/* Drawer panel slides in from right */}
+          <div
+            className="relative h-full w-96 max-w-[90vw] bg-ivory shadow-2xl flex flex-col"
+            style={{ animation: 'slideInRight 0.25s ease-out' }}
+          >
+            {/* Drawer header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-ivory-dark bg-white">
+              <span className="font-serif text-lg font-bold text-charcoal">
+                Your Cart
+              </span>
+              <button
+                onClick={() => setCartOpen(false)}
+                className="w-9 h-9 rounded-xl bg-ivory hover:bg-ivory-dark flex items-center justify-center text-charcoal transition-colors cursor-pointer"
+                aria-label="Close cart"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Cart Items */}
+            <div className="flex-1 overflow-y-auto p-5">
+              {cart.length === 0 ? (
+                <div className="h-full flex flex-col items-center justify-center text-charcoal-light">
+                  <ShoppingCart size={48} className="mb-4 opacity-50" />
+                  <p>Your cart is empty.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {cart.map((item) => (
+                    <div key={`${item.id}-${item.size || 'default'}`} className="flex gap-4 bg-white p-4 rounded-2xl border border-ivory-dark shadow-sm">
+                      {item.image ? (
+                        <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-ivory-dark">
+                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        </div>
+                      ) : (
+                        <div className="w-20 h-20 rounded-xl bg-sage/10 flex items-center justify-center shrink-0">
+                          <span className="text-xs text-sage font-medium">No img</span>
+                        </div>
+                      )}
+                      
+                      <div className="flex-1 flex flex-col justify-between">
+                        <div>
+                          <h4 className="text-sm font-semibold text-charcoal line-clamp-2">{item.name}</h4>
+                          {item.size && <p className="text-xs text-charcoal-light mt-0.5">{item.size}</p>}
+                        </div>
+                        
+                        <div className="flex items-center justify-between mt-2">
+                          <div className="flex items-center gap-3 bg-ivory-dark rounded-lg px-2 py-1">
+                            <button
+                              onClick={() => {
+                                if (item.quantity > 1) {
+                                  addToCart({ ...item, quantity: -1 });
+                                } else {
+                                  removeFromCart(item.id, item.size);
+                                }
+                              }}
+                              className="text-charcoal hover:text-sage transition-colors cursor-pointer"
+                            >
+                              <Minus size={14} />
+                            </button>
+                            <span className="text-xs font-semibold text-charcoal w-4 text-center">{item.quantity}</span>
+                            <button
+                              onClick={() => addToCart({ ...item, quantity: 1 })}
+                              className="text-charcoal hover:text-sage transition-colors cursor-pointer"
+                            >
+                              <Plus size={14} />
+                            </button>
+                          </div>
+                          
+                          <div className="flex items-center gap-3">
+                            <span className="text-sm font-semibold text-charcoal">{item.price}</span>
+                            <button
+                              onClick={() => removeFromCart(item.id, item.size)}
+                              className="text-terracotta/70 hover:text-terracotta transition-colors cursor-pointer"
+                              aria-label="Remove item"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Drawer Footer */}
+            {cart.length > 0 && (
+              <div className="bg-white border-t border-ivory-dark p-5 space-y-4">
+                <div className="flex items-center justify-between font-serif text-lg text-charcoal">
+                  <span>Total</span>
+                  <span className="font-bold">₹{cartTotal.toLocaleString('en-IN')}</span>
+                </div>
+                <a
+                  href={getWhatsAppCartLink(cart, cartTotal)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setCartOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full py-4 bg-sage hover:bg-sage-dark text-white rounded-2xl text-sm font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                >
+                  <MessageCircle size={18} />
+                  Checkout via WhatsApp
+                </a>
+              </div>
+            )}
           </div>
         </div>
       )}

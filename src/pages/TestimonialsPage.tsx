@@ -1,14 +1,15 @@
 import LeafDivider from '../components/LeafDivider';
 import StarRating from '../components/StarRating';
 
-const testimonials = [
-  { name: 'Priya S.', location: 'Mumbai', rating: 5, product: 'Hair Oil', quote: 'The Hair Oil is absolutely divine! My hair has never felt so nourished and the fragrance is so calming. I\'ve been using it for 3 months and the difference is incredible.' },
-  { name: 'Ananya R.', location: 'Hyderabad', rating: 5, product: 'Face Serum', quote: 'The Face Serum gives me such a beautiful glow every morning. It absorbs so quickly and my skin feels plump and hydrated all day long. Truly a game changer!' },
-  { name: 'Meera I.', location: 'Bangalore', rating: 5, product: 'Face Pack', quote: 'Tried the Face Pack as a weekend ritual. My skin feels completely transformed. 100% natural and it truly shows in the results!' },
-  { name: 'Divya P.', location: 'Chennai', rating: 5, product: 'Hair Pack', quote: 'The Hair Pack smells divine and leaves my hair incredibly soft. I love that it\'s free from all the nasty chemicals. InbaNaturals is my go-to brand now.' },
-  { name: 'Riya K.', location: 'Pune', rating: 5, product: 'Hair Oil', quote: 'Noticed significant reduction in hair fall within just 4 weeks! The formulation is so gentle yet effective. Love the packaging too — feels very premium.' },
-  { name: 'Kavya N.', location: 'Delhi', rating: 4, product: 'Face Serum', quote: 'Really lovely serum. Very lightweight and non-greasy. The vitamin C in it has really helped brighten my skin tone. Customer service was also super helpful.' },
-];
+type Testimonial = {
+  name: string;
+  location: string;
+  rating: number;
+  product: string;
+  quote: string;
+};
+
+const testimonials: Testimonial[] = [];
 
 export default function TestimonialsPage() {
   return (
@@ -24,18 +25,27 @@ export default function TestimonialsPage() {
       </div>
 
       {/* Overall rating banner */}
-      <div className="bg-sage py-10">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <StarRating rating={5} />
-            <span className="font-serif text-4xl text-white font-bold">4.9</span>
+      {testimonials.length > 0 && (
+        <div className="bg-sage py-10">
+          <div className="max-w-3xl mx-auto px-4 text-center">
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <StarRating rating={5} />
+              <span className="font-serif text-4xl text-white font-bold">5.0</span>
+            </div>
+            <p className="text-white/80 text-sm">Early feedback from our first customers</p>
           </div>
-          <p className="text-white/80 text-sm">Based on 200+ verified reviews</p>
         </div>
-      </div>
+      )}
 
       {/* Testimonial cards grid */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {testimonials.length === 0 && (
+          <div className="text-center py-10">
+            <p className="text-charcoal text-base font-medium bg-ivory-dark inline-block px-6 py-3 rounded-2xl border border-ivory-dark">
+              Early feedback from our first customers coming soon! 🌿
+            </p>
+          </div>
+        )}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <div

@@ -1,9 +1,14 @@
 import { Leaf, Heart, Sprout } from 'lucide-react';
 import LeafDivider from '../components/LeafDivider';
+import { Helmet } from 'react-helmet-async';
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Our Story - InbaNaturals</title>
+        <meta name="description" content="Learn about InbaNaturals' mission for clean beauty and sustainable botanical products." />
+      </Helmet>
 
       {/* Page header */}
       <div className="bg-ivory-dark py-14 text-center border-b border-ivory-dark">
@@ -42,7 +47,7 @@ export default function AboutPage() {
               A passion for <em>pure beauty</em>, born in a kitchen.
             </h2>
             <p className="text-charcoal-light leading-relaxed mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. InbaNaturals was born from a simple frustration — the inability to find beauty products free from harsh chemicals that actually worked.
+              InbaNaturals was born from a simple frustration — the inability to find beauty products free from harsh chemicals that actually worked.
             </p>
             <p className="text-charcoal-light leading-relaxed mb-4">
               What started as small-batch experiments in a home kitchen, guided by grandmother's age-old Ayurvedic wisdom, blossomed into a passionate brand dedicated to clean, conscious beauty. Every formula is a labour of love, tested on family and friends before it ever reaches your hands.

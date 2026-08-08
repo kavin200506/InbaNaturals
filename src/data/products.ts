@@ -1,3 +1,8 @@
+import hairOilImg from '../assets/products/hair-oil.jpg';
+import hairPackImg from '../assets/products/hair-pack.jpg';
+import facePackImg from '../assets/products/face-pack.jpg';
+import faceSerumImg from '../assets/products/face-serum.jpg';
+
 // Shared product data used across pages
 export interface Product {
   id: string;
@@ -21,10 +26,10 @@ export const products: Product[] = [
     price: '₹499',
     originalPrice: '₹699',
     category: 'hair',
-    image: 'https://placehold.co/600x600/7A9471/FAF6EE?text=Hair+Oil',
+    image: hairOilImg,
     sizes: ['50ml', '100ml', '200ml'],
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Our Hair Oil is crafted from a blend of rare botanical extracts that penetrate deep into the scalp to nourish, strengthen, and revitalize every strand.',
+      'Awaken your roots with our deeply nourishing botanical blend. Crafted from nature\'s most resilient extracts, this lightweight oil penetrates the scalp to lock in moisture and promote healthy, lustrous growth. Experience the soothing ritual of traditional hair care redefined for the modern age.',
     howToUse:
       'Apply 5–6 drops to your scalp and massage gently in circular motions. Leave on for at least 30 minutes or overnight for best results. Wash off with a mild shampoo. Use 2–3 times a week for optimal results.',
     ingredients:
@@ -37,10 +42,10 @@ export const products: Product[] = [
     price: '₹399',
     originalPrice: '₹549',
     category: 'hair',
-    image: 'https://placehold.co/600x600/A8C1A1/2E2A26?text=Hair+Pack',
+    image: hairPackImg,
     sizes: ['100g', '200g'],
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Our Hair Pack is a luxurious deep conditioning treatment infused with natural clays and botanical oils to restore moisture, reduce frizz, and add brilliant shine.',
+      'Transform dull, lifeless strands into a crown of silk with this luxurious deep conditioning treatment. Infused with mineral-rich clays and restorative botanical oils, it works intensely to smooth frizz and deliver brilliant, lasting shine. Treat yourself to a spa-like revival in the comfort of your own home.',
     howToUse:
       'Apply generously to damp hair from roots to tips. Leave on for 20–30 minutes. Rinse thoroughly with lukewarm water. For best results, use once a week after shampooing.',
     ingredients:
@@ -53,10 +58,10 @@ export const products: Product[] = [
     price: '₹349',
     originalPrice: '₹499',
     category: 'face',
-    image: 'https://placehold.co/600x600/C97C5D/FAF6EE?text=Face+Pack',
+    image: facePackImg,
     sizes: ['50g', '100g'],
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Our Face Pack combines the purifying power of natural clays with the brightening effects of turmeric and vitamin C to give you clear, glowing skin.',
+      'Unveil your skin\'s true radiance with our purifying, earth-derived clay mask. Harmonizing the gentle detoxifying power of natural clays with the brightening magic of turmeric and vitamin C, it effortlessly draws out impurities. The result is a beautifully clear, luminous complexion that feels incredibly soft to the touch.',
     howToUse:
       'Mix 1–2 teaspoons with rose water or plain water to form a smooth paste. Apply evenly to cleansed face. Leave for 15–20 minutes until partially dry. Rinse off with lukewarm water.',
     ingredients:
@@ -69,10 +74,10 @@ export const products: Product[] = [
     price: '₹599',
     originalPrice: '₹799',
     category: 'face',
-    image: 'https://placehold.co/600x600/5A7453/FAF6EE?text=Face+Serum',
+    image: faceSerumImg,
     sizes: ['15ml', '30ml'],
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Our Face Serum is a potent blend of Vitamin C, hyaluronic acid, and plant extracts that work synergistically to brighten, hydrate, and firm your skin for a natural, youthful radiance.',
+      'Drench your skin in pure, weightless hydration with our age-defying vitamin C serum. This potent elixir combines botanical extracts and hyaluronic acid to instantly firm, brighten, and restore your natural bounce. Elevate your daily routine with a drop of liquid gold for a youthful, dewy glow.',
     howToUse:
       'After cleansing and toning, apply 3–4 drops to your face and neck. Gently press into skin using fingertips. Follow with your moisturizer. Use morning and evening for best results.',
     ingredients:

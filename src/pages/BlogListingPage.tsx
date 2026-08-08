@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { blogPosts } from '../data/blog';
 import LeafDivider from '../components/LeafDivider';
 import { ArrowRight, Calendar, User } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 type BlogCategory = 'All' | 'Hair Care' | 'Skin Care' | 'Wellness';
 
@@ -15,6 +16,10 @@ export default function BlogListingPage() {
 
   return (
     <div className="min-h-screen pb-20">
+      <Helmet>
+        <title>Blog & Natural Tips - InbaNaturals</title>
+        <meta name="description" content="Explore Ayurvedic rituals, clean beauty tips, and botanical guides for healthy skin and hair." />
+      </Helmet>
       {/* Page header */}
       <div className="bg-ivory-dark py-14 text-center border-b border-ivory-dark">
         <span className="text-sage text-xs font-medium uppercase tracking-widest">Botanical Living</span>
