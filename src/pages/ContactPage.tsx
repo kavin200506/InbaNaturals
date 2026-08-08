@@ -34,7 +34,7 @@ export default function ContactPage() {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          access_key: "YOUR_WEB3FORMS_ACCESS_KEY",
+          access_key: "27812200-cf31-43a4-8dd4-ed7e2ad2e73f",
           ...formState
         })
       });
@@ -46,6 +46,7 @@ export default function ContactPage() {
         setError(result.message || 'Something went wrong. Please try again later.');
       }
     } catch (err) {
+      console.error('Web3Forms fetch error:', err);
       setError('Failed to send message. Please try again later.');
     } finally {
       setLoading(false);
