@@ -241,7 +241,7 @@ export default function CombosPage() {
                     <button
                       onClick={() => handleAddComboToCart(combo)}
                       disabled={selectedIds.length === 0}
-                      className="w-full flex items-center justify-center gap-1.5 bg-sage hover:bg-sage-dark text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 text-xs sm:text-sm hover:scale-[1.02] disabled:opacity-40 disabled:pointer-events-none cursor-pointer"
+                      className="w-full flex items-center justify-center gap-1.5 bg-sage hover:bg-sage-dark text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 ease-out active:scale-[0.98] text-xs sm:text-sm disabled:opacity-40 disabled:pointer-events-none cursor-pointer hover:-translate-y-0.5 hover:shadow-sm"
                     >
                       <ShoppingBag size={16} />
                       Add Bundle
@@ -249,7 +249,7 @@ export default function CombosPage() {
                     <button
                       onClick={() => handleOrderComboWhatsApp(combo)}
                       disabled={selectedIds.length === 0}
-                      className="w-full flex items-center justify-center gap-1.5 bg-terracotta hover:bg-terracotta-dark text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 text-xs sm:text-sm hover:scale-[1.02] disabled:opacity-40 disabled:pointer-events-none cursor-pointer"
+                      className="w-full flex items-center justify-center gap-1.5 bg-terracotta hover:bg-terracotta-dark text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 ease-out active:scale-[0.98] text-xs sm:text-sm disabled:opacity-40 disabled:pointer-events-none cursor-pointer hover:-translate-y-0.5 hover:shadow-sm"
                     >
                       <MessageSquare size={16} />
                       WhatsApp Order
@@ -304,7 +304,7 @@ export default function CombosPage() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center justify-center gap-2 bg-terracotta hover:bg-terracotta-dark text-white font-bold py-3 px-6 rounded-xl transition-all text-xs md:text-sm hover:scale-[1.03] ${
+              className={`flex items-center justify-center gap-2 bg-terracotta hover:bg-terracotta-dark text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 ease-out active:scale-[0.98] cursor-pointer text-xs md:text-sm hover:-translate-y-0.5 hover:shadow-md ${
                 cartCount === 0 ? 'opacity-40 pointer-events-none' : ''
               }`}
             >

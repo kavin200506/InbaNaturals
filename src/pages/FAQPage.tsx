@@ -29,7 +29,7 @@ export default function FAQPage() {
             href="https://wa.me/919999999999"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-sage hover:bg-sage-dark text-white font-medium px-8 py-3.5 rounded-2xl transition-colors duration-200"
+            className="inline-flex items-center gap-2 bg-sage hover:bg-sage-dark text-white font-medium px-8 py-3.5 rounded-2xl transition-all duration-200 ease-out active:scale-[0.98] cursor-pointer hover:shadow-lg hover:-translate-y-0.5"
           >
             Ask on WhatsApp
           </a>

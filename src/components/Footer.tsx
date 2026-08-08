@@ -57,7 +57,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="w-9 h-9 rounded-xl bg-white/10 hover:bg-sage transition-colors duration-200 flex items-center justify-center"
+                className="w-9 h-9 rounded-xl bg-white/10 hover:bg-sage transition-all duration-200 ease-out active:scale-[0.98] flex items-center justify-center cursor-pointer"
               >
                 {icon}
               </a>
@@ -71,7 +71,7 @@ export default function Footer() {
           <ul className="space-y-2.5">
             {quickLinks.map(({ label, to }) => (
               <li key={to}>
-                <Link to={to} className="text-sm text-white/60 hover:text-sage-light transition-colors duration-200">
+                <Link to={to} className="text-sm text-white/60 hover:text-sage-light transition-all duration-200 ease-out">
                   {label}
                 </Link>
               </li>
@@ -85,7 +85,7 @@ export default function Footer() {
           <ul className="space-y-2.5">
             {products.map(({ label, to }) => (
               <li key={to}>
-                <Link to={to} className="text-sm text-white/60 hover:text-sage-light transition-colors duration-200">
+                <Link to={to} className="text-sm text-white/60 hover:text-sage-light transition-all duration-200 ease-out">
                   {label}
                 </Link>
               </li>
@@ -95,7 +95,7 @@ export default function Footer() {
           <ul className="space-y-2.5">
             {policyLinks.map(({ label, to }) => (
               <li key={to}>
-                <Link to={to} className="text-sm text-white/60 hover:text-sage-light transition-colors duration-200">
+                <Link to={to} className="text-sm text-white/60 hover:text-sage-light transition-all duration-200 ease-out">
                   {label}
                 </Link>
               </li>
@@ -117,7 +117,7 @@ export default function Footer() {
             </li>
             <li className="flex items-start gap-3 text-sm text-white/60">
               <MessageCircle size={16} className="text-sage-light mt-0.5 shrink-0" />
-              <a href="https://wa.me/918610866523" target="_blank" rel="noopener noreferrer" className="hover:text-sage-light transition-colors">
+              <a href="https://wa.me/918610866523" target="_blank" rel="noopener noreferrer" className="hover:text-sage-light transition-all duration-200 ease-out">
                 Chat on WhatsApp
               </a>
             </li>
@@ -131,7 +131,7 @@ export default function Footer() {
                 placeholder="your@email.com"
                 className="flex-1 bg-white/10 border border-white/20 text-white text-sm rounded-xl px-3 py-2 placeholder-white/30 focus:outline-none focus:border-sage-light transition-colors"
               />
-              <button className="bg-sage hover:bg-sage-dark text-white text-sm px-4 py-2 rounded-xl transition-colors">
+              <button className="bg-sage hover:bg-sage-dark text-white text-sm px-4 py-2 rounded-xl transition-all duration-200 ease-out active:scale-[0.98] cursor-pointer">
                 →
               </button>
             </div>

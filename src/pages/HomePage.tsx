@@ -81,13 +81,13 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link
                 to="/shop"
-                className="inline-flex items-center justify-center gap-2 bg-sage hover:bg-sage-dark text-white font-medium px-8 py-4 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 text-base"
+                className="inline-flex items-center justify-center gap-2 bg-sage hover:bg-sage-dark text-white font-medium px-8 py-4 rounded-2xl transition-all duration-200 ease-out active:scale-[0.98] hover:shadow-lg text-base cursor-pointer"
               >
                 Shop Now <ArrowRight size={18} />
               </Link>
               <Link
                 to="/about"
-                className="inline-flex items-center justify-center gap-2 border-2 border-sage text-sage hover:bg-sage hover:text-white font-medium px-8 py-4 rounded-2xl transition-all duration-300 text-base"
+                className="inline-flex items-center justify-center gap-2 border-2 border-sage text-sage hover:bg-sage hover:text-white font-medium px-8 py-4 rounded-2xl transition-all duration-200 ease-out active:scale-[0.98] text-base cursor-pointer"
               >
                 Our Story
               </Link>
@@ -138,7 +138,7 @@ export default function HomePage() {
         <div className="text-center mt-10">
           <Link
             to="/shop"
-            className="inline-flex items-center gap-2 border-2 border-sage text-sage hover:bg-sage hover:text-white font-medium px-8 py-3 rounded-2xl transition-all duration-300"
+            className="inline-flex items-center gap-2 border-2 border-sage text-sage hover:bg-sage hover:text-white font-medium px-8 py-3 rounded-2xl transition-all duration-200 ease-out active:scale-[0.98] cursor-pointer"
           >
             View All Products <ArrowRight size={16} />
           </Link>
@@ -219,8 +219,9 @@ export default function HomePage() {
             </div>
           </div>
           <div className="text-center mt-10">
-            <Link to="/combos" className="inline-flex items-center gap-2 border-2 border-sage text-sage hover:bg-sage hover:text-white font-semibold px-8 py-3 rounded-2xl transition-all duration-300">
-              Customize All Combos <ArrowRight size={16} />
+            <Link to="/combos" className="inline-flex items-center gap-2 border-2 border-sage text-sage hover:bg-sage hover:text-white font-semibold px-8 py-3 rounded-2xl transition-all duration-200 ease-out active:scale-[0.98] cursor-pointer">
+              Shop Bundles
+              <ArrowRight size={18} />
             </Link>
           </div>
         </div>
@@ -364,7 +365,7 @@ export default function HomePage() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border-2 border-sage text-sage hover:bg-sage hover:text-white font-semibold px-8 py-3.5 rounded-full transition-all duration-300 text-sm hover:scale-[1.03]"
+              className="inline-flex items-center gap-2 border-2 border-sage text-sage hover:bg-sage hover:text-white font-semibold px-8 py-3.5 rounded-full transition-all duration-200 ease-out active:scale-[0.98] text-sm cursor-pointer"
             >
               Follow us @inbanaturals
             </a>

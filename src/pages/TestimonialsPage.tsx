@@ -89,7 +89,7 @@ export default function TestimonialsPage() {
           <p className="text-charcoal-light text-sm mb-6 leading-relaxed">
             Share your experience and help others discover the power of natural beauty.
           </p>
-          <button className="bg-sage hover:bg-sage-dark text-white font-medium px-8 py-3.5 rounded-2xl transition-colors duration-200">
+          <button className="bg-sage hover:bg-sage-dark text-white font-medium px-8 py-3.5 rounded-2xl transition-all duration-200 ease-out active:scale-[0.98] cursor-pointer hover:shadow-lg hover:-translate-y-0.5">
             Write a Review
           </button>
         </div>
