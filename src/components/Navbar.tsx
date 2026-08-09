@@ -114,14 +114,28 @@ export default function Navbar() {
                   end={to === '/'}
                   className={({ isActive }) => {
                     const isCurrentlyActive = location.pathname === '/' ? activeSectionPath === to : isActive;
-                    return `text-sm font-medium transition-all duration-200 ease-out ${
+                    return `relative text-sm font-medium transition-all duration-200 ease-out pb-0.5 ${
                       isCurrentlyActive
-                        ? 'text-sage border-b-2 border-sage pb-0.5'
-                        : 'text-charcoal-light hover:text-charcoal hover:border-b-2 hover:border-charcoal-light pb-0.5'
+                        ? 'text-sage'
+                        : 'text-charcoal-light hover:text-charcoal hover:border-b-2 hover:border-charcoal-light'
                     }`;
                   }}
                 >
-                  {label}
+                  {({ isActive }) => {
+                    const isCurrentlyActive = location.pathname === '/' ? activeSectionPath === to : isActive;
+                    return (
+                      <>
+                        {label}
+                        {isCurrentlyActive && (
+                          <motion.div
+                            layoutId="nav-underline"
+                            className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-sage rounded-full"
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                      </>
+                    );
+                  }}
                 </NavLink>
               ))}
             </nav>
@@ -215,14 +229,28 @@ export default function Navbar() {
                     onClick={() => setMobileOpen(false)}
                     className={({ isActive }) => {
                       const isCurrentlyActive = location.pathname === '/' ? activeSectionPath === to : isActive;
-                      return `flex items-center px-4 py-3.5 rounded-2xl text-base font-medium transition-all duration-200 ease-out ${
+                      return `relative flex items-center px-4 py-3.5 rounded-2xl text-base font-medium transition-all duration-200 ease-out ${
                         isCurrentlyActive
-                          ? 'bg-sage/10 text-sage font-semibold'
+                          ? 'text-sage font-semibold'
                           : 'text-charcoal hover:bg-ivory-dark active:scale-[0.98]'
                       }`;
                     }}
                   >
-                    {label}
+                    {({ isActive }) => {
+                      const isCurrentlyActive = location.pathname === '/' ? activeSectionPath === to : isActive;
+                      return (
+                        <>
+                          {isCurrentlyActive && (
+                            <motion.div
+                              layoutId="nav-bg-mobile"
+                              className="absolute inset-0 bg-sage/10 rounded-2xl"
+                              transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                            />
+                          )}
+                          <span className="relative z-10">{label}</span>
+                        </>
+                      );
+                    }}
                   </NavLink>
                 ))}
               </nav>
