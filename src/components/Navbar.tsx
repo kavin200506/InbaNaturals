@@ -19,6 +19,7 @@ const navLinks = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [activeSectionPath, setActiveSectionPath] = useState('/');
   const { cart, cartCount, cartTotal, addToCart, removeFromCart } = useCart();
   const location = useLocation();
   const shouldReduceMotion = useReducedMotion();
@@ -27,6 +28,51 @@ export default function Navbar() {
   useEffect(() => {
     setMobileOpen(false);
     setCartOpen(false);
+  }, [location.pathname]);
+
+  // Scrollspy logic for Home page
+  useEffect(() => {
+    if (location.pathname !== '/') return;
+
+    const sectionIds = [
+      'hero',
+      'featured-products',
+      'special-combos',
+      'why-choose-us',
+      'testimonials-home',
+      'instagram-feed',
+      'faq-home',
+      'newsletter'
+    ];
+
+    const sectionPathMap: Record<string, string> = {
+      'hero': '/',
+      'featured-products': '/shop',
+      'special-combos': '/combos',
+      'why-choose-us': '/',
+      'testimonials-home': '/testimonials',
+      'instagram-feed': '/',
+      'faq-home': '/faq',
+      'newsletter': '/'
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSectionPath(sectionPathMap[entry.target.id] || '/');
+          }
+        });
+      },
+      { rootMargin: '-100px 0px -60% 0px' }
+    );
+
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
   }, [location.pathname]);
 
   // Framer motion variants
@@ -66,13 +112,14 @@ export default function Navbar() {
                   key={to}
                   to={to}
                   end={to === '/'}
-                  className={({ isActive }) =>
-                    `text-sm font-medium transition-all duration-200 ease-out ${
-                      isActive
+                  className={({ isActive }) => {
+                    const isCurrentlyActive = location.pathname === '/' ? activeSectionPath === to : isActive;
+                    return `text-sm font-medium transition-all duration-200 ease-out ${
+                      isCurrentlyActive
                         ? 'text-sage border-b-2 border-sage pb-0.5'
                         : 'text-charcoal-light hover:text-charcoal hover:border-b-2 hover:border-charcoal-light pb-0.5'
-                    }`
-                  }
+                    }`;
+                  }}
                 >
                   {label}
                 </NavLink>
@@ -166,13 +213,14 @@ export default function Navbar() {
                     to={to}
                     end={to === '/'}
                     onClick={() => setMobileOpen(false)}
-                    className={({ isActive }) =>
-                      `flex items-center px-4 py-3.5 rounded-2xl text-base font-medium transition-all duration-200 ease-out ${
-                        isActive
+                    className={({ isActive }) => {
+                      const isCurrentlyActive = location.pathname === '/' ? activeSectionPath === to : isActive;
+                      return `flex items-center px-4 py-3.5 rounded-2xl text-base font-medium transition-all duration-200 ease-out ${
+                        isCurrentlyActive
                           ? 'bg-sage/10 text-sage font-semibold'
                           : 'text-charcoal hover:bg-ivory-dark active:scale-[0.98]'
-                      }`
-                    }
+                      }`;
+                    }}
                   >
                     {label}
                   </NavLink>
