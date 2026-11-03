@@ -14,7 +14,7 @@ import { products } from '../data/products';
 import { blogPosts } from '../data/blog';
 import { INSTAGRAM_URL, getWhatsAppComboLink, WHATSAPP_NUMBER } from '../config';
 import { Helmet } from 'react-helmet-async';
-import { supabase } from '../lib/supabase';
+import { logOrder } from '../lib/firebase';
 
 type FilterCategory = 'all' | 'hair' | 'face';
 type SortOption = 'default' | 'price-asc' | 'price-desc' | 'name';
@@ -203,13 +203,9 @@ export default function HomePage() {
           };
         });
 
-        const { error } = await supabase.from('orders').insert({
-          items: items,
-          total_amount: finalTotal
-        });
-        if (error) console.error('Supabase async error:', error);
+        logOrder(items, finalTotal);
       } catch (err) {
-        console.error('Supabase sync error:', err);
+        console.error('Order sync error:', err);
       }
     })();
 

@@ -7,7 +7,7 @@ import StarRating from '../components/StarRating';
 import { products } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { getWhatsAppProductLink } from '../config';
-import { supabase } from '../lib/supabase';
+import { logOrder } from '../lib/firebase';
 import { Helmet } from 'react-helmet-async';
 
 type Tab = 'description' | 'howToUse' | 'ingredients';
@@ -242,24 +242,17 @@ export default function ProductDetailPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
-                  (async () => {
-                    try {
-                      const { error } = await supabase.from('orders').insert({
-                        items: [{
-                          id: product.id,
-                          name: product.name,
-                          price: product.price,
-                          size: product.sizes[selectedSize],
-                          quantity: 1,
-                          image: product.image
-                        }],
-                        total_amount: parseInt(product.price.replace(/\D/g, ''))
-                      });
-                      if (error) console.error('Supabase async error:', error);
-                    } catch (err) {
-                      console.error('Supabase sync error:', err);
-                    }
-                  })();
+                  logOrder(
+                    [{
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      size: product.sizes[selectedSize],
+                      quantity: 1,
+                      image: product.image
+                    }],
+                    parseInt(product.price.replace(/\D/g, '')) || 0
+                  );
                 }}
                 className="w-full flex items-center justify-center gap-2.5 bg-terracotta hover:bg-terracotta-dark text-white font-semibold py-4 rounded-2xl transition-all duration-200 ease-out active:scale-[0.98] hover:shadow-lg hover:-translate-y-0.5 text-base animate-pulse shadow-md shadow-terracotta/20 hover:animate-none cursor-pointer"
               >

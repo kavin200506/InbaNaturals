@@ -3,7 +3,7 @@ import type { Product } from '../data/products';
 import { ShoppingBag } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { getWhatsAppProductLink } from '../config';
-import { supabase } from '../lib/supabase';
+import { logOrder } from '../lib/firebase';
 
 interface ProductCardProps {
   product: Product;
@@ -73,24 +73,17 @@ export default function ProductCard({ product }: ProductCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
-                (async () => {
-                  try {
-                    const { error } = await supabase.from('orders').insert({
-                      items: [{
-                        id: product.id,
-                        name: product.name,
-                        price: product.price,
-                        size: product.sizes[0] || 'Standard',
-                        quantity: 1,
-                        image: product.image
-                      }],
-                      total_amount: parseInt(product.price.replace(/\D/g, ''))
-                    });
-                    if (error) console.error('Supabase async error:', error);
-                  } catch (err) {
-                    console.error('Supabase sync error:', err);
-                  }
-                })();
+                logOrder(
+                  [{
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    size: product.sizes[0] || 'Standard',
+                    quantity: 1,
+                    image: product.image
+                  }],
+                  parseInt(product.price.replace(/\D/g, '')) || 0
+                );
               }}
               className="flex items-center justify-center gap-1.5 bg-terracotta hover:bg-terracotta-dark text-white text-xs font-semibold py-2.5 px-3 rounded-xl transition-all hover:scale-[1.03] active:scale-[0.98] duration-200 ease-out"
             >
