@@ -1,7 +1,10 @@
-import hairOilImg from '../assets/products/hair-oil.jpg';
-import hairPackImg from '../assets/products/hair-pack.jpg';
-import facePackImg from '../assets/products/face-pack.jpg';
-import faceSerumImg from '../assets/products/face-serum.jpg';
+// Firebase Cloud Storage Image URLs
+export const FIREBASE_STORAGE_URLS = {
+  'hair-oil': 'https://firebasestorage.googleapis.com/v0/b/inbanaturals-f936d.firebasestorage.app/o/products%2Fhair_oil.jpeg?alt=media&token=5892f109-d89c-43e2-bfe2-60e2dc0565cf',
+  'hair-pack': 'https://firebasestorage.googleapis.com/v0/b/inbanaturals-f936d.firebasestorage.app/o/products%2Fhair_pack.jpeg?alt=media&token=87e33535-2a50-4db5-9bc7-53e144139c1e',
+  'face-pack': 'https://firebasestorage.googleapis.com/v0/b/inbanaturals-f936d.firebasestorage.app/o/products%2Fface_pack.jpeg?alt=media&token=03d7e4d7-aa6c-4c33-917a-5b89564a0d47',
+  'face-serum': 'https://firebasestorage.googleapis.com/v0/b/inbanaturals-f936d.firebasestorage.app/o/products%2Fface_serum.jpeg?alt=media&token=5827a921-7ea0-4233-b854-43e816d73fb2',
+};
 
 // Shared product data used across pages
 export interface Product {
@@ -26,7 +29,7 @@ export const products: Product[] = [
     price: '₹499',
     originalPrice: '₹699',
     category: 'hair',
-    image: hairOilImg,
+    image: FIREBASE_STORAGE_URLS['hair-oil'],
     sizes: ['50ml', '100ml', '200ml'],
     description:
       'Awaken your roots with our deeply nourishing botanical blend. Crafted from nature\'s most resilient extracts, this lightweight oil penetrates the scalp to lock in moisture and promote healthy, lustrous growth. Experience the soothing ritual of traditional hair care redefined for the modern age.',
@@ -42,7 +45,7 @@ export const products: Product[] = [
     price: '₹399',
     originalPrice: '₹549',
     category: 'hair',
-    image: hairPackImg,
+    image: FIREBASE_STORAGE_URLS['hair-pack'],
     sizes: ['100g', '200g'],
     description:
       'Transform dull, lifeless strands into a crown of silk with this luxurious deep conditioning treatment. Infused with mineral-rich clays and restorative botanical oils, it works intensely to smooth frizz and deliver brilliant, lasting shine. Treat yourself to a spa-like revival in the comfort of your own home.',
@@ -58,7 +61,7 @@ export const products: Product[] = [
     price: '₹349',
     originalPrice: '₹499',
     category: 'face',
-    image: facePackImg,
+    image: FIREBASE_STORAGE_URLS['face-pack'],
     sizes: ['50g', '100g'],
     description:
       'Unveil your skin\'s true radiance with our purifying, earth-derived clay mask. Harmonizing the gentle detoxifying power of natural clays with the brightening magic of turmeric and vitamin C, it effortlessly draws out impurities. The result is a beautifully clear, luminous complexion that feels incredibly soft to the touch.',
@@ -74,7 +77,7 @@ export const products: Product[] = [
     price: '₹599',
     originalPrice: '₹799',
     category: 'face',
-    image: faceSerumImg,
+    image: FIREBASE_STORAGE_URLS['face-serum'],
     sizes: ['15ml', '30ml'],
     description:
       'Drench your skin in pure, weightless hydration with our age-defying vitamin C serum. This potent elixir combines botanical extracts and hyaluronic acid to instantly firm, brighten, and restore your natural bounce. Elevate your daily routine with a drop of liquid gold for a youthful, dewy glow.',

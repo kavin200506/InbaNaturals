@@ -46,11 +46,10 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         if (!snapshot.empty) {
           const fetchedProducts = snapshot.docs.map((docSnap) => {
             const data = docSnap.data() as Omit<Product, 'id'>;
-            const defaultProd = defaultProducts.find((p) => p.id === docSnap.id);
             return {
               id: docSnap.id,
               ...data,
-              image: data.image || defaultProd?.image || '',
+              image: data.image || '',
             };
           });
           setProducts(fetchedProducts);

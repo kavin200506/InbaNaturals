@@ -355,7 +355,21 @@ export default function Navbar() {
                       <div key={`${item.id}-${item.size || 'default'}`} className="flex gap-4 bg-white p-4 rounded-2xl border border-ivory-dark shadow-sm">
                         {item.image ? (
                           <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-ivory-dark">
-                            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                                const parent = e.currentTarget.parentElement;
+                                if (parent && !parent.querySelector('.cart-img-x')) {
+                                  const xDiv = document.createElement('div');
+                                  xDiv.className = 'cart-img-x w-full h-full flex items-center justify-center bg-red-50 text-red-600 font-bold text-xs';
+                                  xDiv.innerText = '❌';
+                                  parent.appendChild(xDiv);
+                                }
+                              }}
+                            />
                           </div>
                         ) : (
                           <div className="w-20 h-20 rounded-xl bg-sage/10 flex items-center justify-center shrink-0">

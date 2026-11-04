@@ -486,7 +486,21 @@ export default function HomePage() {
                               isSelected ? 'border-sage scale-105 shadow-sm' : 'border-transparent opacity-40 hover:opacity-60'
                             }`}
                           >
-                            <img src={prod.image} alt={prod.name} className="w-full h-full object-cover" />
+                            <img
+                              src={prod.image}
+                              alt={prod.name}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                                const parent = e.currentTarget.parentElement;
+                                if (parent && !parent.querySelector('.img-x-error')) {
+                                  const xDiv = document.createElement('div');
+                                  xDiv.className = 'img-x-error w-full h-full flex items-center justify-center bg-red-100 text-red-600 font-bold text-sm';
+                                  xDiv.innerText = '❌';
+                                  parent.appendChild(xDiv);
+                                }
+                              }}
+                            />
                             {isSelected && (
                               <div className="absolute top-1 right-1 w-5 h-5 bg-sage text-white rounded-full flex items-center justify-center">
                                 <Check size={12} strokeWidth={3} />

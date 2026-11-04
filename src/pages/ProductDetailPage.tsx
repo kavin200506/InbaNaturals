@@ -46,6 +46,7 @@ export default function ProductDetailPage() {
 
   const [selectedSize, setSelectedSize] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [imgError, setImgError] = useState(false);
   const [activeTab, setActiveTab] = useState<Tab>('description');
   const { addToCart } = useCart();
 
@@ -141,12 +142,21 @@ export default function ProductDetailPage() {
           {/* ─── Image gallery ─── */}
           <div className="space-y-3">
             {/* Main image */}
-            <div className="w-full aspect-square rounded-2xl overflow-hidden border border-ivory-dark bg-ivory shadow-sm">
-              <img
-                src={thumbnails[selectedImage]}
-                alt={`${product.name} view ${selectedImage + 1}`}
-                className="w-full h-full object-cover"
-              />
+            <div className="w-full aspect-square rounded-2xl overflow-hidden border border-ivory-dark bg-ivory shadow-sm flex items-center justify-center">
+              {imgError || !thumbnails[selectedImage] ? (
+                <div className="w-full h-full flex flex-col items-center justify-center bg-red-50/50 text-red-600 p-8 text-center border-2 border-dashed border-red-200">
+                  <span className="text-6xl mb-3 font-bold">❌</span>
+                  <span className="text-base font-bold uppercase tracking-wider text-red-700">Image Load Failed</span>
+                  <span className="text-xs text-charcoal-light mt-1">Not loaded from Firebase</span>
+                </div>
+              ) : (
+                <img
+                  src={thumbnails[selectedImage]}
+                  alt={`${product.name} view ${selectedImage + 1}`}
+                  onError={() => setImgError(true)}
+                  className="w-full h-full object-cover"
+                />
+              )}
             </div>
             {/* Thumbnails */}
             <div className="grid grid-cols-4 gap-3">

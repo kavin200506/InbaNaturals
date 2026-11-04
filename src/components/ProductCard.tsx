@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Product } from '../data/products';
 import { ShoppingBag } from 'lucide-react';
@@ -11,17 +12,27 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
+  const [imgError, setImgError] = useState(false);
 
   return (
     <div className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 ease-out hover:-translate-y-1 overflow-hidden border border-ivory-dark flex flex-col">
       {/* Image */}
       <Link to={`/product/${product.id}`} className="block overflow-hidden">
-        <div className="relative overflow-hidden bg-ivory-dark h-64">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-out"
-          />
+        <div className="relative overflow-hidden bg-ivory-dark h-64 flex items-center justify-center">
+          {imgError || !product.image ? (
+            <div className="w-full h-full flex flex-col items-center justify-center bg-red-50/50 text-red-600 p-4 text-center border-2 border-dashed border-red-200">
+              <span className="text-4xl mb-2 font-bold">❌</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-red-700">Image Load Failed</span>
+              <span className="text-[10px] text-charcoal-light mt-1">Not loaded from Firebase</span>
+            </div>
+          ) : (
+            <img
+              src={product.image}
+              alt={product.name}
+              onError={() => setImgError(true)}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ease-out"
+            />
+          )}
           {product.originalPrice && (
             <span className="absolute top-3 left-3 bg-terracotta text-white text-xs font-medium px-2 py-1 rounded-full">
               Sale
