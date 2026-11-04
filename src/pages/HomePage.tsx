@@ -10,7 +10,7 @@ import LeafDivider from '../components/LeafDivider';
 import ProductCard from '../components/ProductCard';
 import StarRating from '../components/StarRating';
 import FAQAccordion from '../components/FAQAccordion';
-import { products } from '../data/products';
+import { useProducts } from '../context/ProductContext';
 import { blogPosts } from '../data/blog';
 import { INSTAGRAM_URL, getWhatsAppComboLink, WHATSAPP_NUMBER } from '../config';
 import { Helmet } from 'react-helmet-async';
@@ -72,6 +72,7 @@ const testimonialsList = [
 export default function HomePage() {
   const location = useLocation();
   const { addToCart } = useCart();
+  const { products } = useProducts();
 
   // Scroll to hash on mount or location change
   useEffect(() => {

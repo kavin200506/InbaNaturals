@@ -4,7 +4,7 @@ import { ShoppingBag, Zap, ChevronLeft, ArrowRight } from 'lucide-react';
 import LeafDivider from '../components/LeafDivider';
 import ProductCard from '../components/ProductCard';
 import StarRating from '../components/StarRating';
-import { products } from '../data/products';
+import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
 import { getWhatsAppProductLink } from '../config';
 import { logOrder } from '../lib/firebase';
@@ -41,7 +41,8 @@ const defaultReviews: Record<string, ReviewItem[]> = {
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const product = products.find((p) => p.id === id);
+  const { products, getProductById, loading } = useProducts();
+  const product = getProductById(id || '');
 
   const [selectedSize, setSelectedSize] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -59,6 +60,9 @@ export default function ProductDetailPage() {
   const [reviewerComment, setReviewerComment] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center text-charcoal">Loading product...</div>;
+  }
   if (!product) return <Navigate to="/shop" replace />;
 
   const relatedProducts = products.filter((p) => p.id !== id).slice(0, 3);

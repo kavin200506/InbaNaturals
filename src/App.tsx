@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import BlogPostDetailPage from './pages/BlogPostDetailPage';
 import { CartProvider } from './context/CartContext';
+import { ProductProvider } from './context/ProductContext';
 import ScrollToTop from './components/ScrollToTop';
 import ShippingPolicyPage from './pages/ShippingPolicyPage';
 import ReturnsPolicyPage from './pages/ReturnsPolicyPage';
@@ -63,19 +64,21 @@ function AnimatedRoutes() {
 
 export default function App() {
   return (
-    <CartProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-1">
-            <AnimatedRoutes />
-          </main>
-          <Footer />
-          <WhatsAppFAB />
-        </div>
-      </BrowserRouter>
-    </CartProvider>
+    <ProductProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-1">
+              <AnimatedRoutes />
+            </main>
+            <Footer />
+            <WhatsAppFAB />
+          </div>
+        </BrowserRouter>
+      </CartProvider>
+    </ProductProvider>
   );
 }
 
