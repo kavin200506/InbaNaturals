@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Menu, X, MessageCircle, Plus, Minus, Trash2 } from 'lucide-react';
+import { ShoppingCart, Menu, X, MessageCircle, Plus, Minus, Trash2, User, LogOut, Package, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion, type Variants } from 'framer-motion';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { WHATSAPP_NUMBER, getWhatsAppCartLink } from '../config';
 import { logOrder } from '../lib/firebase';
 
@@ -22,8 +23,10 @@ const sectionIds = navLinks.map(link => link.id);
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [activeScrollPath, setActiveScrollPath] = useState('hero');
   const { cart, cartCount, cartTotal, addToCart, removeFromCart } = useCart();
+  const { user, profile, openAuthModal, openOrdersModal, logout, requireAuth } = useAuth();
   const location = useLocation();
   const shouldReduceMotion = useReducedMotion();
 
@@ -181,6 +184,54 @@ export default function Navbar() {
                 <MessageCircle size={14} />
                 WhatsApp
               </a>
+
+              {/* User Account / Sign In button */}
+              {user ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-ivory-dark text-charcoal hover:bg-sage/10 transition-colors border border-ivory-dark cursor-pointer"
+                  >
+                    <div className="w-5 h-5 rounded-full bg-sage text-white flex items-center justify-center text-[10px]">
+                      {(profile?.name || user.email || 'U')[0].toUpperCase()}
+                    </div>
+                    <span className="hidden md:inline max-w-[100px] truncate">{profile?.name || user.email?.split('@')[0]}</span>
+                    <ChevronDown size={13} className="text-charcoal-light" />
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {userMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-ivory-dark py-2 z-50 animate-fade-in">
+                      <div className="px-4 py-2 border-b border-ivory-dark">
+                        <p className="text-xs font-semibold text-charcoal truncate">{profile?.name || 'Customer'}</p>
+                        <p className="text-[11px] text-charcoal-light truncate">{user.email}</p>
+                      </div>
+                      <button
+                        onClick={() => { setUserMenuOpen(false); openOrdersModal(); }}
+                        className="w-full px-4 py-2 text-left text-xs text-charcoal hover:bg-ivory flex items-center gap-2 transition-colors cursor-pointer"
+                      >
+                        <Package size={14} className="text-sage" />
+                        <span>My Orders & Tracking</span>
+                      </button>
+                      <button
+                        onClick={() => { setUserMenuOpen(false); logout(); }}
+                        className="w-full px-4 py-2 text-left text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors border-t border-ivory-dark mt-1 cursor-pointer"
+                      >
+                        <LogOut size={14} />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button
+                  onClick={openAuthModal}
+                  className="flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-full bg-sage text-white hover:bg-sage-dark transition-all duration-200 ease-out active:scale-[0.98] shadow-sm cursor-pointer"
+                >
+                  <User size={14} />
+                  <span>Sign In</span>
+                </button>
+              )}
 
               {/* Cart icon */}
               <button
@@ -431,20 +482,35 @@ export default function Navbar() {
                     <span>Total</span>
                     <span className="font-bold">₹{cartTotal.toLocaleString('en-IN')}</span>
                   </div>
-                  <a
-                    href={getWhatsAppCartLink(cart, cartTotal)}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
                     onClick={() => {
-                      setCartOpen(false);
-                      // Log to Firebase asynchronously without blocking WhatsApp navigation
-                      logOrder(cart, cartTotal);
+                      requireAuth(() => {
+                        setCartOpen(false);
+                        const customerInfo = {
+                          name: profile?.name,
+                          phone: profile?.phone,
+                          address: profile?.address,
+                          city: profile?.city,
+                          pincode: profile?.pincode,
+                        };
+                        logOrder(cart, cartTotal, {
+                          userId: user?.uid,
+                          customerName: profile?.name,
+                          customerEmail: profile?.email || user?.email || '',
+                          customerPhone: profile?.phone,
+                          deliveryAddress: profile?.address,
+                          city: profile?.city,
+                          pincode: profile?.pincode,
+                        });
+                        const waUrl = getWhatsAppCartLink(cart, cartTotal, customerInfo);
+                        window.open(waUrl, '_blank');
+                      });
                     }}
-                    className="flex items-center justify-center gap-2 w-full py-4 bg-sage hover:bg-sage-dark text-white rounded-2xl text-sm font-semibold transition-all duration-200 ease-out active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 w-full py-4 bg-sage hover:bg-sage-dark text-white rounded-2xl text-sm font-semibold transition-all duration-200 ease-out active:scale-[0.98] cursor-pointer"
                   >
                     <MessageCircle size={18} />
                     Checkout via WhatsApp
-                  </a>
+                  </button>
                 </div>
               )}
             </motion.div>

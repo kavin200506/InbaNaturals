@@ -8,6 +8,9 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import BlogPostDetailPage from './pages/BlogPostDetailPage';
 import { CartProvider } from './context/CartContext';
 import { ProductProvider } from './context/ProductContext';
+import { AuthProvider } from './context/AuthContext';
+import AuthModal from './components/AuthModal';
+import MyOrdersModal from './components/MyOrdersModal';
 import ScrollToTop from './components/ScrollToTop';
 import ShippingPolicyPage from './pages/ShippingPolicyPage';
 import ReturnsPolicyPage from './pages/ReturnsPolicyPage';
@@ -64,21 +67,25 @@ function AnimatedRoutes() {
 
 export default function App() {
   return (
-    <ProductProvider>
-      <CartProvider>
-        <BrowserRouter>
-          <ScrollToTop />
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-1">
-              <AnimatedRoutes />
-            </main>
-            <Footer />
-            <WhatsAppFAB />
-          </div>
-        </BrowserRouter>
-      </CartProvider>
-    </ProductProvider>
+    <AuthProvider>
+      <ProductProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <ScrollToTop />
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-1">
+                <AnimatedRoutes />
+              </main>
+              <Footer />
+              <WhatsAppFAB />
+              <AuthModal />
+              <MyOrdersModal />
+            </div>
+          </BrowserRouter>
+        </CartProvider>
+      </ProductProvider>
+    </AuthProvider>
   );
 }
 

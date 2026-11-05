@@ -6,6 +6,7 @@ import {
   Calendar, User, Sprout, Phone, Mail, Clock, MapPin, Send, MessageCircle
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import LeafDivider from '../components/LeafDivider';
 import ProductCard from '../components/ProductCard';
 import StarRating from '../components/StarRating';
@@ -73,6 +74,7 @@ export default function HomePage() {
   const location = useLocation();
   const { addToCart } = useCart();
   const { products } = useProducts();
+  const { user, profile, requireAuth } = useAuth();
 
   // Scroll to hash on mount or location change
   useEffect(() => {
@@ -149,69 +151,82 @@ export default function HomePage() {
   };
 
   const handleAddComboToCart = (combo: ComboDefinition) => {
-    const selectedIds = comboSelections[combo.id] || [];
-    if (selectedIds.length === 0) return;
+    requireAuth(() => {
+      const selectedIds = comboSelections[combo.id] || [];
+      if (selectedIds.length === 0) return;
 
-    const { finalTotal } = calculateComboPrices(combo);
-    const isAllSelected = selectedIds.length === combo.productIds.length;
-    
-    if (isAllSelected) {
-      addToCart({
-        id: combo.id,
-        name: combo.name,
-        price: `₹${finalTotal}`,
-        size: `${selectedIds.length} Products`,
-        image: products.find((p) => p.id === selectedIds[0])?.image,
-      });
-    } else {
-      selectedIds.forEach((id) => {
-        const prod = products.find((p) => p.id === id);
-        if (prod) {
-          addToCart({
-            id: prod.id,
-            name: prod.name,
-            price: prod.price,
-            size: prod.sizes[0],
-            image: prod.image,
-          });
-        }
-      });
-    }
+      const { finalTotal } = calculateComboPrices(combo);
+      const isAllSelected = selectedIds.length === combo.productIds.length;
+      
+      if (isAllSelected) {
+        addToCart({
+          id: combo.id,
+          name: combo.name,
+          price: `₹${finalTotal}`,
+          size: `${selectedIds.length} Products`,
+          image: products.find((p) => p.id === selectedIds[0])?.image,
+        });
+      } else {
+        selectedIds.forEach((id) => {
+          const prod = products.find((p) => p.id === id);
+          if (prod) {
+            addToCart({
+              id: prod.id,
+              name: prod.name,
+              price: prod.price,
+              size: prod.sizes[0],
+              image: prod.image,
+            });
+          }
+        });
+      }
+    });
   };
 
   const handleOrderComboWhatsApp = (combo: ComboDefinition) => {
-    const selectedIds = comboSelections[combo.id] || [];
-    if (selectedIds.length === 0) return;
-    
-    const selectedProductNames = selectedIds.map(
-      (id) => products.find((p) => p.id === id)?.name || id
-    );
+    requireAuth(() => {
+      const selectedIds = comboSelections[combo.id] || [];
+      if (selectedIds.length === 0) return;
+      
+      const selectedProductNames = selectedIds.map(
+        (id) => products.find((p) => p.id === id)?.name || id
+      );
 
-    const { finalTotal } = calculateComboPrices(combo);
+      const { finalTotal } = calculateComboPrices(combo);
 
-    // Log to Supabase asynchronously
-    (async () => {
-      try {
-        const items = selectedIds.map(id => {
-          const prod = products.find(p => p.id === id);
-          return {
-            id: id,
-            name: prod?.name || id,
-            price: prod?.price || '',
-            size: prod?.sizes[0] || 'Standard',
-            quantity: 1,
-            image: prod?.image || ''
-          };
-        });
+      const customerInfo = {
+        name: profile?.name,
+        phone: profile?.phone,
+        address: profile?.address,
+        city: profile?.city,
+        pincode: profile?.pincode,
+      };
 
-        logOrder(items, finalTotal);
-      } catch (err) {
-        console.error('Order sync error:', err);
-      }
-    })();
+      const items = selectedIds.map((id) => {
+        const prod = products.find((p) => p.id === id);
+        return {
+          id: id,
+          name: prod?.name || id,
+          price: prod?.price || '',
+          size: prod?.sizes[0] || 'Standard',
+          quantity: 1,
+          image: prod?.image || '',
+        };
+      });
 
-    const waLink = getWhatsAppComboLink(combo.name, selectedProductNames);
-    window.open(waLink, '_blank');
+      logOrder(items, finalTotal, {
+        userId: user?.uid,
+        customerName: profile?.name,
+        customerEmail: profile?.email || user?.email || '',
+        customerPhone: profile?.phone,
+        deliveryAddress: profile?.address,
+        city: profile?.city,
+        pincode: profile?.pincode,
+      });
+
+      const waLink = getWhatsAppComboLink(combo.name, selectedProductNames, finalTotal, customerInfo);
+      window.open(waLink, '_blank');
+    });
   };
 
   // ---- BLOG STATE ----
